@@ -1,20 +1,196 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+    <h1>
+        Doc.Repair Report Interface
+    </h1>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-12 pull-md-4 bd-content">
+            <div class="bd-example">
 
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Header</legend>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Job Number
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <input class="form-control" type="text" [(ngModel)]='vmReport.jobNumber' required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Date
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <input class="form-control" type="date" [(ngModel)]='vmReport.date'>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Customer Info</legend>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Customer Name
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <input class="form-control" type="text" [(ngModel)]='vmReport.customerName'>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-tel-input" class="col-3 col-form-label">Contact phone Number
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <input class="form-control" type="tel" id="example-tel-input" [(ngModel)]='vmReport.customerPhoneNumber'>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Device Info</legend>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Device
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <select class="form-control" (change)="onInputSelectChange($event.target.value,'device')">
+                                <option *ngFor="let i of listOfDevices">{{i}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Brand
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <select class="form-control" (change)="onInputSelectChange($event.target.value,'brand')">
+                                <option *ngFor="let i of listOfBrands">{{i}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Model
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <input class="form-control" type="text" [(ngModel)]='vmReport.model'>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">S/N</label>
+                        <div class="col-9">
+                            <input class="form-control" type="text" [(ngModel)]='vmReport.sn'>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Notes & prices</legend>
+                    <div class="form-group row">
+                        <label for="example-tel-input" class="col-3 col-form-label">Complain notes
+                            <span style="color: red">*</span>
+                        </label>
+                        <div class="col-9">
+                            <textarea class="form-control" maxlength="250" rows="5" [(ngModel)]='vmReport.complainNotes'></textarea>
+                            <small style="color:#0069d9" *ngIf="250 - vmReport.complainNotes.length > 50"> Only {{250 - vmReport.complainNotes.length}} characters left.</small>
+                            <small style="color:#d97b00" *ngIf="250 - vmReport.complainNotes.length > 1 && 250 - vmReport.complainNotes.length <= 50 ">
+                                Only {{250 - vmReport.complainNotes.length}} characters left.</small>
+                            <small style="color:#dc3545" *ngIf="250 - vmReport.complainNotes.length >= 0 && 250 - vmReport.complainNotes.length <= 1 ">
+                                Only {{250 - vmReport.complainNotes.length}} character left.</small>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-tel-input" class="col-3 col-form-label">Tech repair notes</label>
+                        <div class="col-6">
+                            <textarea class="form-control" rows="5" [(ngModel)]='vmReport.techRepairNotes'></textarea>
+                            <small style="color:#0069d9" *ngIf="250 - vmReport.techRepairNotes.length > 50"> Only {{250 - vmReport.techRepairNotes.length}} characters left.</small>
+                            <small style="color:#d97b00" *ngIf="250 - vmReport.techRepairNotes.length > 1 && 250 - vmReport.techRepairNotes.length <= 50 ">
+                                Only {{250 - vmReport.techRepairNotes.length}} characters left.</small>
+                            <small style="color:#dc3545" *ngIf="250 - vmReport.techRepairNotes.length >= 0 && 250 - vmReport.techRepairNotes.length <= 1 ">
+                                Only {{250 - vmReport.techRepairNotes.length}} character left.</small>
+                        </div>
+                        <div class="col-3" style="
+                        display: flex;
+                    ">
+                            <label style="
+                                border: 1px solid #ced4da;
+                                display:  inline;
+                                line-height:  1.5;
+                                height: 38px;
+                                border-right: none;
+                                margin-right: -1px;
+                                background:  #e9ecef;
+                                padding: 6.5px;
+                            ">RM</label>
+                            <input class="form-control" type="number" placeholder="Price in RM" [(ngModel)]='vmReport.techRepairNotesPrice' (blur)="calculateTotal()">
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="example-tel-input" class="col-3 col-form-label">Add a used part</label>
+                        <div class="col-6">
+                            <input class="form-control" type="text" [(ngModel)]='newUsedPartName'>
+                        </div>
+                        <div class="col-2" style="
+                        display: flex;
+                    ">
+                            <label style="
+                            border: 1px solid #ced4da;
+                            display:  inline;
+                            line-height:  1.5;
+                            height: 38px;
+                            border-right: none;
+                            margin-right: -1px;
+                            background:  #e9ecef;
+                            padding: 6.5px;
+                        ">RM</label>
+                            <input class="form-control" type="number" placeholder="Price" [(ngModel)]='newUsedPartPrice'>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn-block btn btn-outline-primary" (click)='addUsedPart()'>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row" *ngFor="let usedPart of vmReport.usedParts; index as i" [attr.data-index]="i">
+                        <label class="col-3 col-form-label">Used part {{i}}</label>
+                        <div class="col-6">
+                            <input class="form-control" type="text" value='{{usedPart.name}}' disabled>
+                        </div>
+                        <div class="col-2">
+                            <input class="form-control" type="number" value='{{usedPart.price}}' disabled>
+                        </div>
+                        <p class="col-1">
+                            <button type="button" class="btn-block btn btn-outline-danger" (click)='deleteUsedPart(i)'>
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </p>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="example-number-input" class="col-3 col-form-label">Total</label>
+                        <div class="col-6">
+                        </div>
+                        <div class="col-3">
+                            <input class="form-control" type="number" id="example-number-input" style="
+                            border-left-width: 5px;
+                            border-right-width: 5px;
+                            border-color: green;
+                        " value="{{vmReport.total}}" disabled>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary  btn-block" style="margin-right: 5px;" (click)="downloadPDF()">Save PDF</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

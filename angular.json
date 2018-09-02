@@ -20,12 +20,23 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/doc.jpg"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/regular.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/brands.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/solid.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/pdfmake/build/pdfmake.js",
+              "./node_modules/pdfmake/build/vfs_fonts.js"
+            ]
           },
           "configurations": {
             "production": {
